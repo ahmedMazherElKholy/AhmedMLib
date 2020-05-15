@@ -11,13 +11,14 @@ import java.util.Scanner;
  *
  * @author Ahmed Mazher <ahmzel2012@gmail.com>
  */
-public abstract class Team {
+public interface Team {
 
-    protected abstract void initializeGame(Scanner iniData);
+    void initializeGame(Scanner iniData);
 
-    protected abstract boolean canPlay();
-    protected abstract void setCanNotPlay();
+    boolean canPlay();
 
-    protected abstract String playTurn(Scanner turnData);
+    void setCanNotPlay();
+
+    String playTurn(Scanner turnData);
 
 }
