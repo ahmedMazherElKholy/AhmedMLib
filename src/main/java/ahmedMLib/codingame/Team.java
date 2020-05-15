@@ -12,21 +12,12 @@ import java.util.Scanner;
  * @author Ahmed Mazher <ahmzel2012@gmail.com>
  */
 public abstract class Team {
-    
-    final int teamNum;
-    boolean canPlay;
-
-    public Team(int teamNum) {
-        this.canPlay = true;
-        this.teamNum = teamNum;
-    }
-
-    public int getTeamNum() {
-        return teamNum;
-    }
 
     protected abstract void initializeGame(Scanner iniData);
 
+    protected abstract boolean canPlay();
+    protected abstract void setCanNotPlay();
+
     protected abstract String playTurn(Scanner turnData);
-    
+
 }
