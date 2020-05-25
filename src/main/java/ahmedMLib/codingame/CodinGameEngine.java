@@ -7,6 +7,7 @@ package ahmedMLib.codingame;
 
 import ahmedMLib.Errors.ErrorInMethod;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -22,26 +23,27 @@ public abstract class CodinGameEngine {
 
     public final void playGame() {
         setupGameData();
-        Map<Integer,Team> teams = getTeams();
+        List<Team> teams = getTeams();
         if (teams == null || teams.isEmpty()) {
             throw new ErrorInMethod("playGame() CodinGameEngine", "team list are null or empty");
         }
-        for (Team a : teams.values()) {
-            a.initializeGame(getInitializationGameData(a));
+        for (Team a : teams) {
+            a.initializeTeam(getInitializationGameData(a));
         }
         int canPlayCount = teams.size();
         while (!gameEnds() && canPlayCount > 0 && turn <= getMaxTurnCount()) {
-            HashMap<Integer, String> playerMessages = new HashMap<>();
-            for (Team a : teams.values()) {
+            HashMap<Team, String> playerMessages = new HashMap<>();
+            for (Team a : teams) {
                 if (a.canPlay()) {
-                    a.playTurn(getGameData(a));
+                    String msg = a.playTurn(getGameData(a));
+                    playerMessages.put(a, msg);
                 }
             }
-            for (Map.Entry<Integer, String> msg : playerMessages.entrySet()) {
-                String errMsg = updateGameData(msg.getValue(), teams.get(msg.getKey()));
-                System.err.println("message of team " + msg.getKey() + " " + msg);
+            for (Map.Entry<Team, String> msgEntry : playerMessages.entrySet()) {
+                String errMsg = updateGameData(msgEntry.getValue(), msgEntry.getKey());
+                System.err.println("message of team " + msgEntry.getKey() + " " + msgEntry);
                 if (!errMsg.isEmpty()) {
-                    teams.get(msg.getKey()).setCanNotPlay();
+                    msgEntry.getKey().setCanNotPlay();
                     canPlayCount--;
                     System.out.println(errMsg);
                 }
@@ -74,6 +76,6 @@ public abstract class CodinGameEngine {
     
     protected abstract int getMaxTurnCount();
 
-    protected abstract Map<Integer ,Team> getTeams();
+    protected abstract List<Team> getTeams();
 
 }

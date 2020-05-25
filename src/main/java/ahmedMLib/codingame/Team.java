@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public interface Team {
 
-    void initializeGame(Scanner iniData);
+    void initializeTeam(Scanner iniData);
 
     boolean canPlay();
 
