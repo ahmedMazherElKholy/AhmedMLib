@@ -6,10 +6,15 @@
 package ahmedMLib.codingame;
 
 import ahmedMLib.Errors.ErrorInMethod;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -19,10 +24,15 @@ import java.util.Scanner;
 public abstract class CodinGameEngine {
 
     private int turn = 0;
+    private final List<CodinGameTeam> teams = new LinkedList<>() ;
 
+    public CodinGameEngine(List<CodinGameTeam> teams) {
+        this.teams.addAll(Collections.unmodifiableList(teams));
+    }
+    
     public final void playGame() {
         setupGameData();
-        List<CodinGameTeam> teams = getTeams();
+        
         if (teams == null || teams.isEmpty()) {
             throw new ErrorInMethod("playGame() CodinGameEngine", "team list are null or empty");
         }
@@ -74,8 +84,6 @@ public abstract class CodinGameEngine {
     protected abstract boolean gameEnds();
 
     protected abstract int getMaxTurnCount();
-
-    protected abstract List<CodinGameTeam> getTeams();
 
     protected abstract boolean canPlay(CodinGameTeam t);
 
