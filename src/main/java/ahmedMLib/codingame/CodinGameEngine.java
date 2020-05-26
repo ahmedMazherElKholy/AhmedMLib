@@ -22,23 +22,23 @@ public abstract class CodinGameEngine {
 
     public final void playGame() {
         setupGameData();
-        List<CodinGamePlayer> teams = getTeams();
+        List<CodinGameTeam> teams = getTeams();
         if (teams == null || teams.isEmpty()) {
             throw new ErrorInMethod("playGame() CodinGameEngine", "team list are null or empty");
         }
-        for (CodinGamePlayer a : teams) {
-            a.initializePlayer(getInitializationGameData(a));
+        for (CodinGameTeam a : teams) {
+            a.initializeTeam(getInitializationGameData(a));
         }
         int canPlayCount = teams.size();
         while (!gameEnds() && canPlayCount > 0 && turn <= getMaxTurnCount()) {
-            HashMap<CodinGamePlayer, String> playerMessages = new HashMap<>();
-            for (CodinGamePlayer a : teams) {
+            HashMap<CodinGameTeam, String> playerMessages = new HashMap<>();
+            for (CodinGameTeam a : teams) {
                 if (canPlay(a)) {
                     String msg = a.playTurn(getGameData(a));
                     playerMessages.put(a, msg);
                 }
             }
-            for (Map.Entry<CodinGamePlayer, String> msgEntry : playerMessages.entrySet()) {
+            for (Map.Entry<CodinGameTeam, String> msgEntry : playerMessages.entrySet()) {
                 String errMsg = updateGameData(msgEntry.getValue(), msgEntry.getKey());
                 System.err.println("message of team " + msgEntry.getKey() + " " + msgEntry);
                 if (!errMsg.isEmpty()) {
@@ -54,9 +54,9 @@ public abstract class CodinGameEngine {
 
     protected abstract void setupGameData();
 
-    protected abstract Scanner getInitializationGameData(CodinGamePlayer t);
+    protected abstract Scanner getInitializationGameData(CodinGameTeam t);
 
-    protected abstract Scanner getGameData(CodinGamePlayer t);
+    protected abstract Scanner getGameData(CodinGameTeam t);
 
     /**
      * this method update game data and should return error message if occurred
@@ -67,7 +67,7 @@ public abstract class CodinGameEngine {
      * @return this method should return error message if occurred or "" if no
      * error
      */
-    protected abstract String updateGameData(String outputMsg, CodinGamePlayer t);
+    protected abstract String updateGameData(String outputMsg, CodinGameTeam t);
 
     protected abstract void resolveGameTrun();
 
@@ -75,10 +75,10 @@ public abstract class CodinGameEngine {
 
     protected abstract int getMaxTurnCount();
 
-    protected abstract List<CodinGamePlayer> getTeams();
+    protected abstract List<CodinGameTeam> getTeams();
 
-    protected abstract boolean canPlay(CodinGamePlayer t);
+    protected abstract boolean canPlay(CodinGameTeam t);
 
-    protected abstract boolean setCanNotPlay(CodinGamePlayer t);
+    protected abstract boolean setCanNotPlay(CodinGameTeam t);
 
 }

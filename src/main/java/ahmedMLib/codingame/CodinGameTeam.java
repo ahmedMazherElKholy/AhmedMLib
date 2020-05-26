@@ -11,9 +11,9 @@ import java.util.Scanner;
  *
  * @author Ahmed Mazher <ahmzel2012@gmail.com>
  */
-public interface CodinGamePlayer {
+public interface CodinGameTeam {
 
-    void initializePlayer(Scanner iniData);
+    void initializeTeam(Scanner iniData);
 
     String playTurn(Scanner turnData);
 
