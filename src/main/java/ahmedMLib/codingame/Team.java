@@ -15,10 +15,6 @@ public interface Team {
 
     void initializeTeam(Scanner iniData);
 
-    boolean canPlay();
-
-    void setCanNotPlay();
-
     String playTurn(Scanner turnData);
 
 }

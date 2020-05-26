@@ -18,7 +18,6 @@ import java.util.Scanner;
 @SuppressWarnings("serial")
 public abstract class CodinGameEngine {
 
-    
     private int turn = 0;
 
     public final void playGame() {
@@ -34,7 +33,7 @@ public abstract class CodinGameEngine {
         while (!gameEnds() && canPlayCount > 0 && turn <= getMaxTurnCount()) {
             HashMap<Team, String> playerMessages = new HashMap<>();
             for (Team a : teams) {
-                if (a.canPlay()) {
+                if (canPlay(a)) {
                     String msg = a.playTurn(getGameData(a));
                     playerMessages.put(a, msg);
                 }
@@ -43,7 +42,7 @@ public abstract class CodinGameEngine {
                 String errMsg = updateGameData(msgEntry.getValue(), msgEntry.getKey());
                 System.err.println("message of team " + msgEntry.getKey() + " " + msgEntry);
                 if (!errMsg.isEmpty()) {
-                    msgEntry.getKey().setCanNotPlay();
+                    setCanNotPlay(msgEntry.getKey());
                     canPlayCount--;
                     System.out.println(errMsg);
                 }
@@ -60,8 +59,8 @@ public abstract class CodinGameEngine {
     protected abstract Scanner getGameData(Team t);
 
     /**
-     * this method update game data and should return error message
-     * if occurred or "" if no error
+     * this method update game data and should return error message if occurred
+     * or "" if no error
      *
      * @param outputMsg
      * @param t
@@ -73,9 +72,13 @@ public abstract class CodinGameEngine {
     protected abstract void resolveGameTrun();
 
     protected abstract boolean gameEnds();
-    
+
     protected abstract int getMaxTurnCount();
 
     protected abstract List<Team> getTeams();
+
+    protected abstract boolean canPlay(Team t);
+
+    protected abstract boolean setCanNotPlay(Team t);
 
 }
