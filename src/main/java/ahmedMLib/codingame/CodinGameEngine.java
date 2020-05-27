@@ -6,15 +6,12 @@
 package ahmedMLib.codingame;
 
 import ahmedMLib.Errors.ErrorInMethod;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -23,8 +20,8 @@ import java.util.stream.Collectors;
 @SuppressWarnings("serial")
 public abstract class CodinGameEngine {
 
-    private int turn = 0;
-    private final List<CodinGameTeam> teams = new LinkedList<>() ;
+    protected int turn = 0;
+    protected final List<CodinGameTeam> teams = new LinkedList<>() ;
 
     public CodinGameEngine(List<CodinGameTeam> teams) {
         this.teams.addAll(Collections.unmodifiableList(teams));
