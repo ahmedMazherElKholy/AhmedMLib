@@ -47,7 +47,6 @@ public abstract class CodinGameEngine {
             }
             for (Map.Entry<CodinGameTeam, String> msgEntry : playerMessages.entrySet()) {
                 String errMsg = updateGameData(msgEntry.getValue(), msgEntry.getKey());
-                System.err.println("message of team " + msgEntry.getKey() + " " + msgEntry);
                 if (!errMsg.isEmpty()) {
                     setCanNotPlay(msgEntry.getKey());
                     canPlayCount--;
@@ -84,6 +83,6 @@ public abstract class CodinGameEngine {
 
     protected abstract boolean canPlay(CodinGameTeam t);
 
-    protected abstract boolean setCanNotPlay(CodinGameTeam t);
+    protected abstract void setCanNotPlay(CodinGameTeam t);
 
 }
